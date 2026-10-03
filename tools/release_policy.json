@@ -1,0 +1,23 @@
+{
+  "mode": "private_preparation",
+  "code_license": "MIT",
+  "content_license": "CC-BY-4.0",
+  "publish_authorized": false,
+  "exclude": [
+    ".git/**", ".env", "**/.env", "*.pem", "*.key", "*.bin",
+    "*.mp3", "backend/poem_library.json",
+    "firmware/PoetryCameraDirector/es8311.cpp", "firmware/PoetryCameraDirector/es8311.h",
+    "director_state.json", "**/director_state.json", "latest_photo.jpg", "**/latest_photo.jpg", "latest_preview.jpg", "**/latest_preview.jpg",
+    "case_audio/**", "**/case_audio/**", "audio-source-backup/**", "**/audio-source-backup/**", "node_modules/**", "**/node_modules/**"
+  ],
+  "reviews": [
+    {"id":"original_audio_or_silent_demo", "complete":false, "detail":"提供原创/明确许可声音或经过测试的无声音演示"},
+    {"id":"visual_character_review", "complete":false, "detail":"确认最终屏幕形象及展示素材的来源与授权"},
+    {"id":"es8311_provenance", "complete":false, "detail":"确认驱动来源/许可，或提供可验证替代实现"},
+    {"id":"literary_library_replacement", "complete":false, "detail":"替换旧文学库并验证附属功能不会因缺文件失败"},
+    {"id":"firmware_distribution_compliance", "complete":false, "detail":"复核音频库 GPL-3.0 与工具链声明，先不分发二进制"},
+    {"id":"clean_environment_reproduction", "complete":false, "detail":"从空白环境完成构建及实机复现"},
+    {"id":"hardware_bom_acceptance", "complete":false, "detail":"补齐最终螺丝、电源、扬声器和线材并验收"},
+    {"id":"competition_rules_review", "complete":false, "detail":"根据实际比赛规则核对材料、AI 使用披露和开放时间"}
+  ]
+}

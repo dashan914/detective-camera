@@ -1,5 +1,9 @@
 # 侦探相机固件
 
+自有源码采用 MIT，但第三方库与未核实驱动不受该许可覆盖。
+ESP32-audioI2S 3.4.7 为 GPL-3.0；分发与其组合的固件前需完成对应源码和许可证合规检查。
+当前 ES8311 驱动的来源记录尚待补齐，不能直接把其许可声明为 MIT。详见 `../NOTICE.md`。
+
 Open `PoetryCameraDirector/PoetryCameraDirector.ino` in Arduino IDE. The folder
 retains its historical name to satisfy Arduino sketch naming requirements.
 Install ESP32 Core 3.3.7 and ESP32-audioI2S 3.4.7 providing `Audio.h`.
