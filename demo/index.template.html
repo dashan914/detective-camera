@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="侦探相机：把真实线索变成一份有逻辑、有趣味的虚构微型案件。"><title>DASHAN · 侦探相机</title><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./detective.css?v=20261004"></head>
+<body>
+<header><a class="wordmark" href="#">DASHAN<span>侦探相机</span></a><nav aria-label="页面导航"><a href="#experience">办案体验</a><a href="#about">项目介绍</a></nav></header>
+<main>
+<section class="hero" id="experience">
+<div class="intro"><h1>日常看起来无事。<br>侦探不这么想。</h1><p class="description">按下快门，体验观察、思考、推理与出案卷。</p><div class="actions"><button id="capture" class="primary" disabled><span class="red-dot" aria-hidden="true"></span>按下快门 · 立案</button><button id="skip" hidden>跳过等待</button></div><p id="ritual-status" role="status" aria-live="polite">正在准备侦探相机…</p><p class="disclaimer">预设案件演示，不连接实机。</p></div>
+<div class="stage"><div id="viewport"></div><div id="flash" aria-hidden="true"></div><div class="loading" id="loading"><span class="loader"></span><p>相机即将就绪</p></div><p class="hint">拖动观察机身</p><div class="chip" id="partCount"></div>
+<section class="explore" aria-label="观察相机"><div class="modes"><button data-mode="exterior" aria-pressed="true">完整外观</button><button data-mode="inside" aria-pressed="false">看看内部</button><button data-mode="explode" aria-pressed="false">拆开看看</button></div><p id="status" role="status" hidden>等待模型加载</p>
+<details id="detail-controls" hidden><summary>更多观察方式</summary><label for="explode">展开 <output id="explodeValue">0%</output></label><input id="explode" type="range" min="0" max="100" value="0"><label><input id="shell" type="checkbox" checked>外壳</label><label><input id="hardware" type="checkbox">硬件</label><button id="zoomIn">放大</button><button id="zoomOut">缩小</button><button id="reset">恢复视角</button><label><input id="rotate" type="checkbox">自动旋转</label><select id="studio" aria-label="光影"><option value="warm">自然光</option><option value="dark">深色背景</option></select></details></section></div>
+</section>
+<section class="about" id="about"><div class="paper-preview"></div><div class="prose"><h2 class="about-title">项目介绍</h2><p class="design-intro">《侦探相机》是一台由 AI 驱动的互动创作相机。</p><button id="read-bottom" hidden>查看案卷</button></div></section>
+</main><dialog id="poem-dialog" hidden aria-hidden="true"><button id="close-poem">关闭</button></dialog>
+<script src="./detective.js?v=20261004"></script><script>__VIEWER_BUNDLE__</script>
+</body></html>

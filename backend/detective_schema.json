@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": ["mode", "detective_submode", "analysis_type", "subject", "key_evidence", "clues", "inference", "confidence"],
+  "properties": {
+    "mode": {"const": "detective"},
+    "detective_submode": {"enum": ["person_profile", "scene_investigation", "hidden_protagonist"]},
+    "analysis_type": {"enum": ["inference", "discovery"]},
+    "subject": {"type": "string", "maxLength": 20},
+    "key_evidence": {"type": "object", "required": ["label", "reason"]},
+    "clues": {"type": "array", "minItems": 2, "maxItems": 4},
+    "inference": {"type": "object", "required": ["setup", "conclusion"], "additionalProperties": false, "properties": {"setup": {"type": "string", "minLength": 1, "maxLength": 60}, "conclusion": {"type": "string", "minLength": 1, "maxLength": 180}}},
+    "narration": {"type": "string", "minLength": 1, "maxLength": 180},
+    "confidence": {"enum": ["low", "medium", "high"]}
+  }
+}

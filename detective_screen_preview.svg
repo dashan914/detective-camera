@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="852" height="720" viewBox="0 0 284 240">
+  <rect width="284" height="240" fill="#f6d7a5"/>
+  <rect x="5" y="5" width="274" height="230" rx="5" fill="none" stroke="#201b17" stroke-width="3"/>
+  <rect x="10" y="10" width="264" height="220" rx="3" fill="none" stroke="#b28b49"/>
+  <rect x="15" y="15" width="254" height="27" fill="#201b17"/>
+  <text x="24" y="32" fill="#f6d7a5" font-family="Courier New,monospace" font-size="9" font-weight="700" letter-spacing="1">DASHAN / CASE FILE</text>
+  <circle cx="255" cy="28" r="5" fill="#32946b"/><circle cx="255" cy="28" r="2" fill="#d5f3df"/>
+
+  <g fill="none" stroke="#a94334" stroke-width="3">
+    <circle cx="30" cy="83" r="12"/><path d="M39 92l14 14" stroke-width="5"/>
+  </g>
+
+  <g fill="none" stroke="#201b17" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M95 73h94" stroke-width="5"/>
+    <path d="M108 73l14-17h39l15 17" stroke-width="5"/>
+    <path d="M176 72l21 7" stroke-width="4"/>
+    <circle cx="142" cy="112" r="48" stroke-width="2"/>
+    <path d="M114 99l19-5M151 97l19 5" stroke-width="4"/>
+    <circle cx="124" cy="102" r="3" fill="#201b17" stroke="none"/>
+    <path d="M151 102h19" stroke-width="4"/>
+    <path d="M122 129l15 6 23-9" stroke-width="3"/>
+  </g>
+  <circle cx="180" cy="120" r="5" fill="#a94334"/>
+  <path d="M33 184h218" stroke="#b28b49" stroke-width="2"/>
+  <text x="142" y="204" text-anchor="middle" fill="#a94334" font-family="Courier New,monospace" font-size="10" font-weight="700" letter-spacing=".5">DETECTIVE SPEAKING</text>
+  <text x="142" y="220" text-anchor="middle" fill="#655b51" font-family="Courier New,monospace" font-size="7" font-weight="700">FACTS FIRST. NONSENSE SECOND.</text>
+</svg>
