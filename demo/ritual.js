@@ -2,16 +2,16 @@ import * as THREE from 'three';
 const $ = s => document.querySelector(s);
 export function createRitual({ scene, parts, camera, controls, renderer, setMode, reduced, onStart }) {
   const demo = window.detectiveDemo;
-  let busy = false, time = 0, progress = 0, phase = 'idle', speaking = false, lastDraw = -1, run = 0, printStart = Infinity, stopVoice = null;
+  let busy = false, time = 0, progress = 0, phase = 'idle', speaking = false, lastDraw = -1, run = 0, printStart = Infinity, printDuration = 5, printVoiceDone = false, stopVoice = null;
   const audio = new Audio(); audio.preload = 'auto'; audio.volume = .85;
-  const voice = async (file, caption, minimum, token) => {
+  const voice = async (file, caption, minimum, token, maxWait = 10000) => {
     $('#voice-caption').textContent = caption;
     const wait = new Promise(resolve => setTimeout(resolve, minimum));
     const ended = new Promise(resolve => {
       if (!demo.sound) return resolve();
       audio.src = `./audio/${file}`; speaking = true;
       const done = () => { clearTimeout(timeout); audio.removeEventListener('ended', done); audio.removeEventListener('error', done); if (stopVoice === done) stopVoice = null; speaking = false; resolve(); };
-      const timeout = setTimeout(done, 10000);
+      const timeout = setTimeout(() => { audio.pause(); done(); }, maxWait);
       stopVoice = done; audio.addEventListener('ended', done, { once: true }); audio.addEventListener('error', done, { once: true });
       audio.play().catch(() => { $('#sound-toggle').textContent = '声音受限 · 字幕继续'; done(); });
     });
@@ -45,11 +45,11 @@ export function createRitual({ scene, parts, camera, controls, renderer, setMode
   const pc = document.createElement('canvas'); pc.width = 768; pc.height = 1600;
   const ctx = pc.getContext('2d'); ctx.fillStyle = '#fffdf7'; ctx.fillRect(0, 0, 768, 1600); ctx.fillStyle = '#202628'; let y = 76;
   const line = (text, font = '32px sans-serif') => { ctx.font = font; ctx.fillText(text, 56, y); y += 54; };
-  const wrap = text => { let current = ''; for (const ch of text) { if (ctx.measureText(current + ch).width > 650) { line(current); current = ''; } current += ch; } if (current) line(current); };
+  const wrap = (text, font = '32px sans-serif') => { ctx.font = font; for (const paragraph of text.split('\n')) { let current = ''; for (const ch of paragraph) { if (ctx.measureText(current + ch).width > 650) { line(current, font); current = ''; } current += ch; } if (current) line(current, font); } };
   line('[ DETECTIVE CAMERA ]', 'bold 39px monospace'); y += 20; line('DEMO / 001', '28px monospace'); y += 30;
   line(demo.sample.title, 'bold 42px sans-serif'); y += 25; line('[ 案情 · 虚构 ]', 'bold 32px sans-serif'); ctx.font = '32px sans-serif'; wrap(demo.sample.setup); y += 25;
-  line('[ 示例现场线索 ]', 'bold 32px sans-serif'); demo.sample.clues.forEach((x, i) => line(`${i + 1}. ${x}`)); y += 25;
-  line('[ 推测还原 ]', 'bold 32px sans-serif'); ctx.font = '32px sans-serif'; wrap(demo.sample.inference); y += 35; line('示例案卷 · 案情与推测纯属虚构', '27px sans-serif');
+  line('[ 现场线索 ]', 'bold 32px sans-serif'); demo.sample.clues.forEach(x => wrap(x)); y += 25;
+  line('[ 侦探推测 ]', 'bold 32px sans-serif'); wrap(demo.sample.inference); y += 35; wrap(demo.sample.afterword, '28px sans-serif'); y += 35; line('示例案卷 · 案情与推测纯属虚构', '27px sans-serif');
   const pt = new THREE.CanvasTexture(pc); pt.colorSpace = THREE.SRGBColorSpace;
   const paper = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: pt, side: THREE.DoubleSide, toneMapped: false })); paper.visible = false; paper.frustumCulled = false; scene.add(paper);
   function updatePaper(p) {
@@ -76,14 +76,17 @@ export function createRitual({ scene, parts, camera, controls, renderer, setMode
     $('#capture').innerHTML = '<span class="red-dot" aria-hidden="true"></span>再体验一次'; $('#flash').classList.remove('on');
   }
   async function start() {
-    if (busy || !screenReady) return; setMode('exterior'); onStart(); busy = true; time = 0; progress = 0; printStart = Infinity; paper.visible = false; lock(true); $('#read-case').hidden = true;
+    if (busy || !screenReady) return; setMode('exterior'); onStart(); busy = true; time = 0; progress = 0; printStart = Infinity; printVoiceDone = false; paper.visible = false; lock(true); $('#read-case').hidden = true;
     const token = ++run; controls.autoRotate = false; $('#rotate').checked = false; camera.position.set(-1.6, 2.9, 3.5); controls.target.set(0, .60, .15);
     if (!reduced) { $('#flash').classList.add('on'); setTimeout(() => $('#flash').classList.remove('on'), 140); }
     setPhase('observing', '快门落下。先观察，不急着下结论。'); if (!await voice('01_shutter.mp3', '好，让我看看。', 2300, token)) return;
-    setPhase('thinking', '示例线索：空盘、茶杯中的碎块、打开的包装。'); if (!await voice('05_wait.mp3', '如果这是故意的……目的是什么？', 5000, token)) return;
-    setPhase('deducing', '如果饼干不是被吃掉，而是泡在了茶里呢？'); if (!await voice('report.mp3', '原来如此，是这么回事啊！我想我知道真相了。', 2000, token)) return;
-    setPhase('printing', '正在打印案情、线索和推测还原…'); $('#voice-caption').textContent = '报告正在出来，别急着拉纸。'; paper.visible = true; printStart = time;
+    setPhase('thinking', '现场线索：肩部两处凸起，正好对应衣架的两端。'); if (!await voice('05_wait.mp3', '如果这是故意的……目的是什么？', 5000, token)) return;
+    setPhase('deducing', '衣服记住了衣架的样子，谁才是真正的主人？'); if (!await voice('report.mp3', '原来如此，是这么回事啊！我想我知道真相了。', 2000, token)) return;
+    setPhase('printing', '正在打印并朗读《衣服真正的主人》的推理…'); paper.visible = true; printStart = time;
+    printDuration = demo.sound ? Math.max(5, demo.sample.narration.durationSeconds) : 5;
     camera.position.set(-1.8, 3.1, 4.5); controls.target.set(0, .35, .25);
+    // Read the exact approved inference, using audio playback as the print clock.
+    void voice(demo.sample.narration.file, demo.sample.inference, 0, token, Math.ceil(printDuration * 1000) + 15000).then(active => { if (active) printVoiceDone = true; });
   }
   const shutter = parts.find(p => (p.userData.part_id || '').startsWith('06_')); $('#capture').onclick = start; $('#skip').onclick = finish; $('#read-bottom').onclick = () => $('#case-dialog').showModal();
   const ray = new THREE.Raycaster(), pointer = new THREE.Vector2(); let down;
@@ -94,9 +97,14 @@ export function createRitual({ scene, parts, camera, controls, renderer, setMode
     if (paper.visible && ray.intersectObject(paper).length) $('#case-dialog').showModal(); else if (shutter && ray.intersectObject(shutter, true).length) start();
   });
   Promise.all(frameLoads).then(() => { screenReady = true; $('#capture').disabled = false; setPhase('idle', '侦探待命。按下快门，开始一次办案体验。'); }).catch(error => { console.error(error); $('#ritual-status').textContent = '屏幕动画未加载，请刷新重试。'; });
-  return { paper, display, get busy() { return busy; }, get progress() { return progress; }, start, setSound(enabled) { audio.muted = !enabled; }, hidePaper() { paper.visible = false; },
+  return { paper, display, get busy() { return busy; }, get progress() { return progress; }, get audioState() { return { speaking, src: audio.currentSrc || audio.src, paused: audio.paused, ended: audio.ended, currentTime: audio.currentTime, duration: audio.duration }; }, start, setSound(enabled) { audio.muted = !enabled; }, hidePaper() { paper.visible = false; },
     update(dt) { time += dt; if (Math.floor(time * 15) !== lastDraw) { lastDraw = Math.floor(time * 15); drawScreen(time); }
-      if (phase === 'printing' && busy) { updatePaper(reduced ? 1 : Math.min(1, (time - printStart) / 5)); if (progress === 1) finish(); }
+      if (phase === 'printing' && busy) {
+        const isCaseAudio = printDuration > 5 && audio.currentSrc.endsWith(`/audio/${demo.sample.narration.file}`);
+        const clock = isCaseAudio && !audio.paused && Number.isFinite(audio.duration) && audio.duration > 0 ? audio.currentTime / audio.duration : (time - printStart) / printDuration;
+        updatePaper(reduced || (isCaseAudio && audio.ended && printVoiceDone) ? 1 : Math.min(1, clock));
+        if (progress === 1 && printVoiceDone) finish();
+      }
     }
   };
 }

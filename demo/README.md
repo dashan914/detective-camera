@@ -23,4 +23,23 @@ python3 -m http.server 8894 --bind 127.0.0.1
 
 `index.template.html` 为页面源文件；`viewer.js` 与 `ritual.js` 为三维交互源码。
 `detective.js` 保存项目介绍和示例案卷；`build.mjs` 输出内嵌三维脚本的页面。
-音频由项目使用者提供，不包含其他语音包、私密照片或运行状态。
+快门与等待语音由使用者提供；`audio/clothes-case-clean.mp3` 是通过项目已有朗读 API
+生成的已确认三句推理，约 8.93 秒。已去除中间非对白人声，保留自然停顿。
+出纸进度跟随音频，字幕与纸条使用同一份推理文字；API Key 和音色 ID 不进入网页。
+
+只发布四个使用中的音频（`01_shutter.mp3`、`05_wait.mp3`、`report.mp3`、
+`clothes-case-clean.mp3`）。不要发布整个仓库，尤其不要把后端目录映射为静态站点。
+部署在子路径时保留相对资源路径，详见 `../docs/RESTORE.md`。
+
+## 可选再生成
+
+`generate_case_narration.py` 从 `--backend-dir` 指定的本地 `.env` 读取已有密钥与音色配置，
+只生成已确认的整段或单句，不创建音色。运行会调用外部服务；备份、构建和测试不会自动调用。
+`export_assembly.py` 从仓库内脱敏装配导出网页 GLB，需 Blender 并关闭自动执行脚本。
+`generate_screen_frames.py` 从固件绘图函数生成 288 帧，需 Python、Pillow 与 clang++。
+
+## 浏览器测试
+
+安装 Playwright 后，启动本地静态服务器，再运行 `node verify.cjs`。
+支持 `PLAYWRIGHT_MODULE`、`CHROME_PATH`、`DEMO_URL` 环境变量。
+测试覆盖顶部实际屏幕、27 件模型、完整朗读与出纸同步、字幕边界、移动端和减少动态效果。

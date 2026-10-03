@@ -20,3 +20,21 @@ compile_commands.json
 .flash-tools/
 node_modules/
 *.bin
+# Credentials, private runtime data and device dumps are never project assets.
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*.log
+case_audio/
+audio-source-backup/
+voice_pack_12/source/
+*.blend1
+*.blend2
+*.zip
+privacy-local.json
+test-results/
+playwright-report/
+backup-manifest.json

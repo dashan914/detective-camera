@@ -7,10 +7,12 @@
     '侦探相机想讨论的是：当 AI 成为创作搭档后，技术门槛不再只意味着限制；每个人都可以把一个看似天马行空的想法，做成能拍照、会思考、能说话，也能吐出纸质案卷的真实物件。'
   ];
   const sample = {
-    title: '最后一块饼干失踪案',
-    setup: '室友把最后一块饼干留作明早的早餐。五分钟后，盘子空了，没人承认吃过。',
-    clues: ['空盘里留有饼干碎屑', '茶杯里浮着浅色碎块', '打开的饼干包装就在杯旁'],
-    inference: '一种可能：有人只想蘸点茶，把饼干泡软，却聊着天忘了拿起来。饼干断在杯里，他捞不起来，也没吃进嘴，便坚持“我没吃”。所谓失踪，是早餐被提前泡成了下午茶。'
+    title: '衣服真正的主人',
+    setup: '我发现衣服的肩膀上，总有两个鼓包。\n于是，我请它调查一下。没想到，它先调查了我。',
+    clues: ['衣服肩部有两处凸起，位置正好对应衣架的两端。'],
+    inference: '衣架穿了它太久，这件衣服早就记住了衣架的样子。\n衣服真正的主人是衣架。\n而你，极有可能是个小偷。',
+    afterword: '第一次使用，它就把我从侦探变成了嫌疑人。',
+    narration: { file: 'clothes-case-clean.mp3', durationSeconds: 8.934 }
   };
   window.detectiveDemo = { sample, paragraphs, phase: 'loading', sound: true };
   document.title = 'DASHAN · 侦探相机';
@@ -27,7 +29,7 @@
   $('.actions').insertAdjacentHTML('beforeend', '<button id="sound-toggle" aria-pressed="true" aria-label="关闭演示声音">声音：开</button><button id="read-case" hidden>阅读案卷</button>');
   $('.intro').insertAdjacentHTML('beforeend', '<ol class="case-steps" aria-label="办案流程"><li data-step="observing">01 观察</li><li data-step="thinking">02 思考</li><li data-step="deducing">03 推理</li><li data-step="printing">04 出卷</li></ol>');
   $('.stage').insertAdjacentHTML('beforeend', '<div class="detective-caption" role="status" aria-live="polite"><span id="phase-label">侦探待命</span><p id="voice-caption">今天有什么值得多看一眼？</p></div>');
-  const sheet = () => `<article class="case-sheet"><div class="case-sheet__head"><span>DETECTIVE CAMERA</span><span>DEMO / 001</span></div><h3>${sample.title}</h3><strong>案情 · 虚构</strong><p>${sample.setup}</p><strong>示例现场线索</strong><ol>${sample.clues.map(x => `<li>${x}</li>`).join('')}</ol><strong>推测还原</strong><p>${sample.inference}</p><div class="case-sheet__seal">示例案卷 · 案情与推测纯属虚构</div></article>`;
+  const sheet = () => `<article class="case-sheet"><div class="case-sheet__head"><span>DETECTIVE CAMERA</span><span>案卷 001</span></div><h3>${sample.title}</h3><strong>案情</strong><p>${sample.setup.replaceAll('\n', '<br>')}</p><strong>现场线索</strong><p>${sample.clues.join('<br>')}</p><strong>侦探推测</strong><p>${sample.inference.replaceAll('\n', '<br>')}</p><p>${sample.afterword}</p><div class="case-sheet__seal">示例案卷 · 案情与推测纯属虚构</div></article>`;
   $('.paper-preview').outerHTML = sheet();
   $('.prose').innerHTML = '<h2 class="about-title">项目介绍</h2>' + paragraphs.map((p, i) => `<p${i === 0 ? ' class="design-intro"' : ''}>${p}</p>`).join('');
   const legacyButton = document.createElement('button'); legacyButton.id = 'read-bottom'; legacyButton.hidden = true; $('.prose').append(legacyButton);

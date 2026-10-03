@@ -1,0 +1,27 @@
+# Template only. Create the dedicated account/directories and check port first.
+[Unit]
+Description=Detective Camera isolated backend
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=detective-camera
+Group=detective-camera
+WorkingDirectory=/opt/detective-camera/backend
+EnvironmentFile=/etc/detective-camera/backend.env
+Environment=DASHAN_HOST=127.0.0.1
+Environment=DASHAN_PORT=8788
+Environment=DASHAN_DATA_FILE=/var/lib/detective-camera/director_state.json
+ExecStart=/opt/detective-camera/.venv/bin/python /opt/detective-camera/backend/server.py
+StateDirectory=detective-camera
+StateDirectoryMode=0700
+UMask=0077
+Restart=on-failure
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

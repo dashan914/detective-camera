@@ -1,0 +1,16 @@
+{
+  "aperture_mm": [
+    13,
+    6
+  ],
+  "radius_mm": 1,
+  "center_yz_mm": [
+    54,
+    11
+  ],
+  "left_only": true,
+  "right_wall_original": true,
+  "non_manifold_edges": 0,
+  "removed_volume_mm3": 233.3414532397146,
+  "other_parts_unchanged": true
+}
