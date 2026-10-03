@@ -1,10 +1,14 @@
 # 侦探相机网页演示
 
-本目录当前仍是私有准备版。自有交互代码按 MIT，模型/原创说明按 CC BY 4.0；当前 `audio/*.mp3` 不在这两类许可范围内。公开前必须替换为明确许可音频或提供测试通过的无声音版本，不能只删音频就声称完整复现。
+[打开在线交互演示](https://ai3dclass.cn/dashan/detective-camera/)
 
 静态、可独立部署的演示，不连接设备，不采集或上传观众照片，不调用 AI。
 示例案件用于展示真实产品的交互顺序：快门、观察语音、屏幕思考表情、形成推测、打印案卷。
 点击机身快门或按钮均可开始；提供声音开关、字幕、跳过等待、阅读案卷和减少动态效果支持。
+
+## 在自己的电脑上运行
+
+以下命令在本目录执行：
 
 ```sh
 npm ci
@@ -12,7 +16,7 @@ node build.mjs
 python3 -m http.server 8894 --bind 127.0.0.1
 ```
 
-浏览器打开 `http://127.0.0.1:8894`。
+启动服务后，在同一台电脑的浏览器打开 `http://127.0.0.1:8894/`。这是本机开发地址，不是在线演示入口。
 
 发布文件：`index.html`、`style.css`、`detective.css`、`detective.js`、
 `DASHAN_V33.glb`、`CourierPrime-Regular.ttf`、`CourierPrime-LICENSE.txt`、
@@ -29,8 +33,9 @@ python3 -m http.server 8894 --bind 127.0.0.1
 生成的已确认三句推理，约 8.93 秒。已去除中间非对白人声，保留自然停顿。
 出纸进度跟随音频，字幕与纸条使用同一份推理文字；API Key 和音色 ID 不进入网页。
 
-只发布四个使用中的音频（`01_shutter.mp3`、`05_wait.mp3`、`report.mp3`、
-`clothes-case-clean.mp3`）。不要发布整个仓库，尤其不要把后端目录映射为静态站点。
+演示引用四个音频（`01_shutter.mp3`、`05_wait.mp3`、`report.mp3`、
+`clothes-case-clean.mp3`），其授权范围见 [许可声明](../NOTICE.md)，不属于项目 MIT / CC BY 4.0 授权。
+部署时只映射演示所需的静态资源，不要把整个仓库或后端目录映射为静态站点。
 部署在子路径时保留相对资源路径，详见 `../docs/RESTORE.md`。
 
 ## 可选再生成
