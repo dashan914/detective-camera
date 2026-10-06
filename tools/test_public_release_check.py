@@ -31,9 +31,9 @@ class PublicPreparationTests(unittest.TestCase):
         for name in ('LICENSE','README.md','hardware/stl/01_Front_fascia.stl','hardware/cad/DASHAN_V33.blend'):
             self.assertFalse(excluded(name,self.policy))
 
-    def test_private_preparation_does_not_authorize_publishing(self):
-        self.assertEqual(self.policy['mode'],'private_preparation')
-        self.assertIs(self.policy['publish_authorized'],False)
+    def test_repository_publication_does_not_complete_asset_reviews(self):
+        self.assertEqual(self.policy['mode'],'public_repository_with_unverified_asset_exceptions')
+        self.assertIs(self.policy['publish_authorized'],True)
         self.assertTrue(pending_reviews(self.policy))
 
 

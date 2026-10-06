@@ -1,8 +1,8 @@
 {
-  "mode": "private_preparation",
+  "mode": "public_repository_with_unverified_asset_exceptions",
   "code_license": "MIT",
   "content_license": "CC-BY-4.0",
-  "publish_authorized": false,
+  "publish_authorized": true,
   "exclude": [
     ".git/**", ".env", "**/.env", "*.pem", "*.key", "*.bin",
     "*.mp3", "backend/poem_library.json",
